@@ -1,3 +1,20 @@
+
+<div *ngIf="coins">
+  <h2 class="page-header">Cryptos Price</h2>
+  <ul class="list-group-item">Bitcoin: ${{coins.bitcoin}}</ul>
+  <ul class="list-group-item">Ethereum: ${{coins.ethereum_usd}}</ul>
+  <ul class="list-group-item">Litecoin : ${{coins.litecoin_usd}}</ul>
+  <ul class="list-group-item">Ethereum : {{coins.ethereum_btc}}</ul>
+  <ul class="list-group-item">Zcash: {{coins.zcash_btc}}</ul>
+  <ul class="list-group-item">Zipple: {{coins.zipple_btc}}</ul>
+  <ul class="list-group-item">Siacoin: {{coins.siacoin_btc}}</ul>
+  <ul class="list-group-item">Xem: {{coins.nem_btc}}</ul>
+  <ul class="list-group-item">Dogecoin: {{coins.dogecoin_btc}}</ul>
+  <ul class="list-group-item">Digibyte: {{coins.digibyte_btc}}</ul>
+</div>
+
+
+<!--
 <div class="jumbotron text-center">
     <h1>MEAN Authentication App</h1>
     <p class="lead">Welcome to our custom MEAN authentication application built from scratch </p>
@@ -20,4 +37,5 @@
       <p>Full featured authentication using JSON web tokens. Login and store user data</p>
     </div>
   </div>
+-->
   

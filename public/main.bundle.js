@@ -208,7 +208,7 @@ module.exports = ""
 /***/ "./src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron text-center\">\n    <h1>MEAN Authentication App</h1>\n    <p class=\"lead\">Welcome to our custom MEAN authentication application built from scratch </p>\n    <div>\n      <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-dark\" [routerLink]=\"['/login']\">Login</a>\n    </div>\n  </div>\n  \n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <h3>Express Backend</h3>\n      <p>A rock solid Node.js/Express server using Mongoose to organize models and query the database</p>\n    </div>\n    <div class=\"col-md-4\">\n      <h3>Angular-CLI</h3>\n      <p>Angular-CLI to generate components, services and more. Local dev server and easy compilation</p>\n    </div>\n    <div class=\"col-md-4\">\n      <h3>JWT Tokens</h3>\n      <p>Full featured authentication using JSON web tokens. Login and store user data</p>\n    </div>\n  </div>\n  "
+module.exports = "\n<div *ngIf=\"coins\">\n  <h2 class=\"page-header\">Cryptos Price</h2>\n  <ul class=\"list-group-item\">Bitcoin: ${{coins.bitcoin}}</ul>\n  <ul class=\"list-group-item\">Ethereum: ${{coins.ethereum_usd}}</ul>\n  <ul class=\"list-group-item\">Litecoin : ${{coins.litecoin_usd}}</ul>\n  <ul class=\"list-group-item\">Ethereum : {{coins.ethereum_btc}}</ul>\n  <ul class=\"list-group-item\">Zcash: {{coins.zcash_btc}}</ul>\n  <ul class=\"list-group-item\">Zipple: {{coins.zipple_btc}}</ul>\n  <ul class=\"list-group-item\">Siacoin: {{coins.siacoin_btc}}</ul>\n  <ul class=\"list-group-item\">Xem: {{coins.nem_btc}}</ul>\n  <ul class=\"list-group-item\">Dogecoin: {{coins.dogecoin_btc}}</ul>\n  <ul class=\"list-group-item\">Digibyte: {{coins.digibyte_btc}}</ul>\n</div>\n\n\n<!--\n<div class=\"jumbotron text-center\">\n    <h1>MEAN Authentication App</h1>\n    <p class=\"lead\">Welcome to our custom MEAN authentication application built from scratch </p>\n    <div>\n      <a class=\"btn btn-primary\" [routerLink]=\"['/register']\">Register</a> <a class=\"btn btn-dark\" [routerLink]=\"['/login']\">Login</a>\n    </div>\n  </div>\n  \n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <h3>Express Backend</h3>\n      <p>A rock solid Node.js/Express server using Mongoose to organize models and query the database</p>\n    </div>\n    <div class=\"col-md-4\">\n      <h3>Angular-CLI</h3>\n      <p>Angular-CLI to generate components, services and more. Local dev server and easy compilation</p>\n    </div>\n    <div class=\"col-md-4\">\n      <h3>JWT Tokens</h3>\n      <p>Full featured authentication using JSON web tokens. Login and store user data</p>\n    </div>\n  </div>\n-->\n  "
 
 /***/ }),
 
@@ -218,6 +218,8 @@ module.exports = "<div class=\"jumbotron text-center\">\n    <h1>MEAN Authentica
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_auth_service__ = __webpack_require__("./src/app/services/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -228,10 +230,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent() {
+    function HomeComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.authService.getCoins().subscribe(function (crypto) {
+            _this.coins = crypto.coins;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
     };
     HomeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -239,7 +252,8 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/home/home.component.html"),
             styles: [__webpack_require__("./src/app/components/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -637,14 +651,14 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.registerUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:3000/users/register', user, {headers: headers})
+        // return this.http.post('http://localhost:8080/users/register', user, {headers: headers})
         return this.http.post('users/register', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        //return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers})
+        // return this.http.post('http://localhost:8080/users/authenticate', user, {headers: headers})
         return this.http.post('users/authenticate', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
@@ -653,7 +667,7 @@ var AuthService = /** @class */ (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        //return this.http.get('http://localhost:3000/users/profile', {headers: headers})
+        // return this.http.get('http://localhost:8080/users/profile', {headers: headers})
         return this.http.get('users/profile', { headers: headers })
             .map(function (res) { return res.json(); });
     };
@@ -674,6 +688,13 @@ var AuthService = /** @class */ (function () {
         this.authToken = null;
         this.user = null;
         localStorage.clear();
+    };
+    AuthService.prototype.getCoins = function () {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
+        headers.append('Content-Type', 'application/json');
+        // return this.http.get('http://localhost:8080/coins', {headers: headers})
+        return this.http.get('coins', { headers: headers })
+            .map(function (res) { return res.json(); });
     };
     AuthService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
