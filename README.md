@@ -7,3 +7,5 @@
 
 # config/database.js => switch between local database vs host database
 # angular-src/app/services/auth.service.ts => add 'http://localhost:3000/*' if running locally
+
+# testing ignore file
